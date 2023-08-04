@@ -1,0 +1,27 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tsc --build",
+    "run": "npm run build && node ./dist/index.js",
+    "trace": "npm run build && GRPC_TRACE=transport,transport_flowctrl GRPC_VERBOSITY=debug node ./dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.4.7",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@google-cloud/pubsub": "^4.0.0",
+    "dotenv": "^16.3.1",
+    "winston": "^3.10.0"
+  },
+  "peerDependencies": {
+    "@grpc/grpc-js": "1.8.19"
+  }
+}

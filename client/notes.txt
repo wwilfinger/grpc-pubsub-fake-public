@@ -1,0 +1,17 @@
+Running locally...
+
+`npm ci` to install dependencies.
+
+`npm run trace` will run with grpc-js tracing turned on for `transport,transport_flowctrl`
+
+Client will attempt to connect to a grpc server on localhost:50051. That server can be started by running the code in the ./server folder.
+
+Configurable settings are in the .env file. Some of the more poorly named ones:
+
+APP_PERIOD_MS
+
+Will print publish stats this often. This is done by monitorProgress() so you can comment that out if you don't want any stats to be printed.
+
+APP_DELAY_MS
+
+Wait this many milliseconds between publishing messages.

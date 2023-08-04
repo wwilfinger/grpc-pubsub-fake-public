@@ -1,0 +1,59 @@
+Running locally
+
+You need to generate certificates first. See <repo root>/cert
+
+go run server.go
+
+There's a handful of configurable settings read in from the environment. The one interesting one will change the ConnectionTimeout for the grpc server.
+
+This listens on localhost:50051 and will successfully respond to the Publish RPC with a hard coded response. But no other RPCs are set up.
+
+% APP_CONNECTION_TIMEOUT=500ms go run server.go
+Go gRPC server
+2023/08/08 22:01:35 ConnectionTimeout: 500ms
+2023/08/08 22:01:35 Listening on [::]:50051
+
+I used this as a starting point
+
+https://github.com/Sup3r-Us3r/grpc-go-example/tree/main
+
+---
+
+Notes on dealing with proto files and protoc
+
+Pubsub proto files are copy pasted from nodejs-pubsub
+
+https://github.com/googleapis/nodejs-pubsub/tree/main/protos/google/pubsub/v1
+
+https://grpc.io/docs/languages/go/basics/
+
+https://github.com/mathisve/grpc-go-example.git
+
+https://grpc.io/docs/languages/go/quickstart/#regenerate-grpc-code
+
+% protoc --version
+libprotoc 23.4
+
+https://protobuf.dev/reference/go/go-generated/
+
+../../googleapis is 
+
+% git remote -v
+origin  https://github.com/googleapis/googleapis.git (fetch)
+origin  https://github.com/googleapis/googleapis.git (push)
+
+I have no idea on how to deal with protoc. I had to change the go_package option in the protos
+
+from
+
+option go_package = "cloud.google.com/go/pubsub/apiv1/pubsubpb;pubsubpb";
+
+to
+
+option go_package = ".;v1";
+
+protoc --go_out=./protos/google/pubsub/v1 \
+    --go-grpc_out=./protos/google/pubsub/v1 \
+    -I ./protos \
+    -I ../../googleapis \
+    protos/google/pubsub/v1/*.proto
